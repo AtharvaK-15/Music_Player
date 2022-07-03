@@ -7,43 +7,21 @@ from tkinter import Button
 from tkinter import filedialog
 from tkinter import font
 
-def volumedown():
-    try:
-        global CurrentVolume
-        if CurrentVolume <= 0:
-            volumelabel.config(fg="blue",text="Volume : Muted")
-            return
-        CurrentVolume=CurrentVolume-float(0.25)
-        mixer.music.set_volume(CurrentVolume)
-    except Exception as e:
-        print(e)
-        songtitle_label.config(fg="blue",text="Please select a file first")
+CurrentVolume = 0.5
 
-def volumeup():
+#Functions
+def PlaySong():
+    filename=filedialog.askopenfilename(initialdir="C:\\Users\\Atharva\\Desktop\\Atharva\\songs",title="Select a song")
+    print(filename)
     try:
-        global CurrentVolume
-        if CurrentVolume>=1:
-            volumelabel.config(fg="blue",text="Volume : Max")
-            return
-        CurrentVolume=CurrentVolume+float(0.25)
-        mixer.music.set_volume(CurrentVolume)
+        mixer.init()
+        mixer.music.load(filename)
+        mixer.music.play()
+        volumelabel.config(fg="green",text="Volume: "+str(CurrentVolume))
     except Exception as e:
         print(e)
-        songtitle_label.config(fg="blue",text="Please select a file first")
+        songtitle_label.config(fg="blue",text="Error playing the music")
 
-def pause():
-    try:
-        mixer.music.pause()
-    except Exception as e:
-        print(e)
-        songtitle_label.config(fg="blue",text="Please select a track first")
-
-def resume():
-    try:
-        mixer.music.unpause()
-    except Exception as e:
-        print(e)
-        songtitle_label.config(fg="blue",text="Please select a track first")
 
 main = Tk()
 main.title("Python Mini Project")
@@ -56,4 +34,11 @@ Label(main,text="Volume",font=("Calibri",10),fg="green").grid(sticky="N",row=4)
 volumelabel = Label(main,font=("Calibri",10))
 volumelabel.grid(sticky="N",row = 5)
 
+#Buttons:
+Button(main,text = "Select song",font=("Calibri",10),command=PlaySong).grid(sticky="N",row=2)
+Button(main,text = "Pause",font=("Calibri",10),command=pause).grid(sticky="W",row=3)
+Button(main,text = "Resume",font=("Calibri",10),command=resume).grid(sticky="E",row=3)
+Button(main,text = "Up",font=("Calibri",10),width=5,command=volumeup).grid(sticky="W",row=5)
+Button(main,text = "Down",font=("Calibri",10),width=5,command=volumedown).grid(sticky="E",row=5)
+#mainloop tells python to run tkinter
 main.mainloop()
