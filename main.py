@@ -11,7 +11,7 @@ CurrentVolume = 0.5
 
 #Functions
 def PlaySong():
-    filename=filedialog.askopenfilename(initialdir="C:\\Users\\Atharva\\Desktop\\Atharva\\songs",title="Select a song")
+    filename=filedialog.askopenfilename(initialdir="C:\\Users\\kulka\\Music",title="Select a song")
     print(filename)
     try:
         mixer.init()
