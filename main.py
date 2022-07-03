@@ -21,7 +21,43 @@ def PlaySong():
     except Exception as e:
         print(e)
         songtitle_label.config(fg="blue",text="Error playing the music")
+def volumedown():
+    try:
+        global CurrentVolume
+        if CurrentVolume <= 0:
+            volumelabel.config(fg="blue",text="Volume : Muted")
+            return
+        CurrentVolume=CurrentVolume-float(0.25)
+        mixer.music.set_volume(CurrentVolume)
+    except Exception as e:
+        print(e)
+        songtitle_label.config(fg="blue",text="Please select a file first")
 
+def volumeup():
+    try:
+        global CurrentVolume
+        if CurrentVolume>=1:
+            volumelabel.config(fg="blue",text="Volume : Max")
+            return
+        CurrentVolume=CurrentVolume+float(0.25)
+        mixer.music.set_volume(CurrentVolume)
+    except Exception as e:
+        print(e)
+        songtitle_label.config(fg="blue",text="Please select a file first")
+
+def pause():
+    try:
+        mixer.music.pause()
+    except Exception as e:
+        print(e)
+        songtitle_label.config(fg="blue",text="Please select a track first")
+
+def resume():
+    try:
+        mixer.music.unpause()
+    except Exception as e:
+        print(e)
+        songtitle_label.config(fg="blue",text="Please select a track first")
 
 main = Tk()
 main.title("Python Mini Project")
